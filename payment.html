@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Payment - ZPR INNOVATION</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            color: #ffffff;
+            background: radial-gradient(circle at top left, rgba(255, 72, 255, 0.12), transparent 20%),
+                radial-gradient(circle at bottom right, rgba(255, 160, 0, 0.14), transparent 18%),
+                #06020c;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #12072d 0%, #4f2cc4 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            font-size: 28px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            animation: headerGlow 2s ease-in-out infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes headerGlow {
+            0% {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            }
+
+            100% {
+                box-shadow: 0 4px 25px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 700px;
+            margin: auto;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(20, 10, 50, 0.95) 100%);
+            color: rgba(242, 242, 255, 0.92);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-top: 20px;
+            animation: cardSlideIn 1.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FF6B35, #e74c3c, #f39c12, #27ae60);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes cardSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.95);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        input,
+        select {
+            padding: 12px;
+            width: 100%;
+            margin: 8px 0;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(245, 245, 255, 0.95);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #000000;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+
+        button {
+            background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+            font-size: 16px;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+            transition: left 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #d8b4fe 0%, #7c3aed 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .summary-item {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .error-list {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .error-list li {
+            margin: 5px 0;
+        }
+
+        .bill-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(20, 10, 50, 0.95) 100%);
+            color: rgba(242, 242, 255, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .bill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .bill-header h3 {
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .bill-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .bill-row.total {
+            font-weight: bold;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 10px;
+        }
+
+        .bill-note {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .bill-actions {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .bill-actions button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>💳 ZPR INNOVATION Payment</header>
+    <div class="container">
+        <div class="card">
+            <h2>Order Summary</h2>
+            <div id="summary"></div>
+            <p class="total"><strong>Total:</strong> ₹<span id="summary-total">0</span></p>
+        </div>
+
+        <div class="card">
+            <h2>Enter Payment Details</h2>
+            <div id="error-message" class="error-message">
+                <strong>Please fix the following errors:</strong>
+                <ul id="error-list" class="error-list"></ul>
+            </div>
+            <label>Phone Number:</label>
+            <input type="text" id="phone" placeholder="Enter phone number" value="+91">
+            <label>Aadhar Card Photo (JPG only):</label>
+            <input type="file" id="aadhar" accept=".jpg,.jpeg" required>
+            <div style="font-size: 12px; color: #666; margin-bottom: 15px;">Please upload a clear photo of your Aadhar
+                card in JPG format only.</div>
+            <label>Payment Method:</label>
+            <select id="payment" onchange="updatePaymentUI()">
+                <option value="Cash on Delivery">Cash on Delivery</option>
+                <option value="UPI/Scanner">UPI/Scanner</option>
+                <option value="Credit/Debit Card">Credit/Debit Card</option>
+            </select>
+            <div id="upi-scanner"
+                style="display:none; margin-top: 15px; padding: 15px; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%); color: white;">
+                <p><strong>Scan this UPI QR code with your UPI app:</strong></p>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=zprinnovation@okicici&pn=ZPR%20INNOVATION&am=0"
+                    alt="UPI QR Code" style="width: 200px; height: 200px; display: block; margin: 10px auto;">
+                <p style="margin:0;">UPI ID: <strong>zprinnovation@okicici</strong></p>
+                <p style="margin:0;">Amount will be updated when you pay.</p>
+            </div>
+            <div id="card-details"
+                style="display:none; margin-top: 15px; padding: 15px; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%); color: white;">
+                <label>Card Holder's Name:</label>
+                <input type="text" id="card-name" placeholder="Enter card holder's name">
+                <label>Card Number:</label>
+                <input type="text" id="card-number" placeholder="Enter card number">
+                <label>Expiry Date (MM/YY):</label>
+                <input type="text" id="expiry-date" placeholder="MM/YY">
+                <label>CVV:</label>
+                <input type="text" id="cvv" placeholder="Enter CVV">
+            </div>
+            <button onclick="payNow()">Pay Now</button>
+        </div>
+
+        <div id="bill-card" class="bill-card">
+            <div class="bill-header">
+                <h3>Payment Bill</h3>
+                <div id="bill-date"></div>
+            </div>
+            <div id="bill-summary"></div>
+            <div class="bill-actions">
+                <button onclick="window.location.href='index.html'">Return to Store</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function updatePaymentUI() {
+            const payment = document.getElementById('payment').value;
+            const scanner = document.getElementById('upi-scanner');
+            const cardDetails = document.getElementById('card-details');
+            clearErrors();
+
+            if (payment === 'UPI/Scanner') {
+                scanner.style.display = 'block';
+                cardDetails.style.display = 'none';
+            } else if (payment === 'Credit/Debit Card') {
+                scanner.style.display = 'none';
+                cardDetails.style.display = 'block';
+            } else {
+                scanner.style.display = 'none';
+                cardDetails.style.display = 'none';
+            }
+        }
+
+        function formatBillDate() {
+            const now = new Date();
+            return now.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+        }
+
+        function showBill(bill) {
+            const billCard = document.getElementById('bill-card');
+            const billDate = document.getElementById('bill-date');
+            const billSummary = document.getElementById('bill-summary');
+
+            billDate.textContent = bill.date;
+            billSummary.innerHTML = '';
+
+            const numberRow = document.createElement('div');
+            numberRow.className = 'bill-row';
+            numberRow.innerHTML = `<span>Bill Number</span><span>${bill.number}</span>`;
+            billSummary.appendChild(numberRow);
+
+            const methodRow = document.createElement('div');
+            methodRow.className = 'bill-row';
+            methodRow.innerHTML = `<span>Payment Method</span><span>${bill.method}</span>`;
+            billSummary.appendChild(methodRow);
+
+            const aadharRow = document.createElement('div');
+            aadharRow.className = 'bill-row';
+            aadharRow.innerHTML = `<span>Aadhar Card</span><span>${bill.aadharFile} ✓</span>`;
+            billSummary.appendChild(aadharRow);
+
+            bill.items.forEach(item => {
+                const itemRow = document.createElement('div');
+                itemRow.className = 'bill-row';
+                itemRow.innerHTML = `<span>${item.name} ${item.editing ? '(Editing)' : ''}</span><span>₹${item.total}</span>`;
+                billSummary.appendChild(itemRow);
+            });
+
+            const totalRow = document.createElement('div');
+            totalRow.className = 'bill-row total';
+            totalRow.innerHTML = `<span>Total Paid</span><span>₹${bill.total}</span>`;
+            billSummary.appendChild(totalRow);
+
+            const recipientRow = document.createElement('div');
+            recipientRow.className = 'bill-row';
+            recipientRow.innerHTML = `<span>Sent To</span><span>${bill.phone}</span>`;
+            billSummary.appendChild(recipientRow);
+
+            const note = document.createElement('div');
+            note.className = 'bill-note';
+            note.innerHTML = `Your bill has been generated and sent to <strong>${bill.phone}</strong>. Please keep this receipt for your records.`;
+            billSummary.appendChild(note);
+
+            billCard.style.display = 'block';
+        }
+
+        function getRegisteredPhone() {
+            return localStorage.getItem('registeredPhone') || '';
+        }
+
+        function loadOrder() {
+            const cart = JSON.parse(localStorage.getItem('rentalCart') || '[]');
+            const total = localStorage.getItem('rentalTotal') || '0';
+            const summary = document.getElementById('summary');
+            const summaryTotal = document.getElementById('summary-total');
+
+            const registeredPhone = getRegisteredPhone();
+            if (registeredPhone) {
+                document.getElementById('phone').value = registeredPhone;
+            }
+
+            if (!cart.length) {
+                summary.innerHTML = '<p>Your cart is empty. <a href="index.html">Return to store</a>.</p>';
+                summaryTotal.innerText = '0';
+                return;
+            }
+
+            summary.innerHTML = '';
+            cart.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'summary-item';
+                itemDiv.innerHTML = `<strong>${item.name}</strong><br>₹${item.total} ${item.editing ? '(Editing)' : ''}`;
+                summary.appendChild(itemDiv);
+            });
+            summaryTotal.innerText = total;
+            updatePaymentUI();
+        }
+
+        function clearErrors() {
+            const errorDiv = document.getElementById('error-message');
+            const errorList = document.getElementById('error-list');
+            errorDiv.classList.remove('show');
+            errorList.innerHTML = '';
+        }
+
+        function showError(errors) {
+            const errorDiv = document.getElementById('error-message');
+            const errorList = document.getElementById('error-list');
+            errorList.innerHTML = '';
+            errors.forEach(error => {
+                const li = document.createElement('li');
+                li.textContent = error;
+                errorList.appendChild(li);
+            });
+            errorDiv.classList.add('show');
+            errorDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function payNow() {
+            clearErrors();
+            const errors = [];
+            const phone = document.getElementById('phone').value.trim();
+            const payment = document.getElementById('payment').value;
+            const cart = JSON.parse(localStorage.getItem('rentalCart') || '[]');
+
+            if (!cart.length) {
+                errors.push('Your cart is empty. Please add items first.');
+                showError(errors);
+                return;
+            }
+
+            if (!phone || phone === '+91') {
+                errors.push('Phone number is required and must be valid.');
+            }
+
+            const aadharFile = document.getElementById('aadhar').files[0];
+            if (!aadharFile) {
+                errors.push('Aadhar card photo is required.');
+            } else {
+                const allowedTypes = ['image/jpeg', 'image/jpg'];
+                if (!allowedTypes.includes(aadharFile.type)) {
+                    errors.push('Please upload a JPG file only for Aadhar card.');
+                }
+            }
+
+            if (payment === 'Credit/Debit Card') {
+                const cardName = document.getElementById('card-name').value.trim();
+                const cardNumber = document.getElementById('card-number').value.trim();
+                const expiryDate = document.getElementById('expiry-date').value.trim();
+                const cvv = document.getElementById('cvv').value.trim();
+
+                if (!cardName) errors.push('Card holder\'s name is required.');
+                if (!cardNumber) errors.push('Card number is required.');
+                if (!expiryDate) errors.push('Expiry date is required.');
+                if (!cvv) errors.push('CVV is required.');
+            }
+
+            if (errors.length > 0) {
+                showError(errors);
+                return;
+            }
+
+            const total = localStorage.getItem('rentalTotal') || '0';
+            localStorage.setItem('registeredPhone', phone);
+
+            const bill = {
+                number: 'INV' + Date.now(),
+                date: formatBillDate(),
+                method: payment,
+                phone: phone,
+                aadharFile: aadharFile.name,
+                items: cart,
+                total: total
+            };
+
+            showBill(bill);
+            localStorage.removeItem('rentalCart');
+            localStorage.removeItem('rentalTotal');
+
+            const summary = document.getElementById('summary');
+            summary.innerHTML = '<p>Your order is completed and a bill has been generated below.</p>';
+            document.getElementById('summary-total').innerText = '0';
+
+            // Send dispatch email to shop owner
+            const emailData = {
+                access_key: '6c87c9d8-d64c-4205-9c9b-6c07e11c36d0', // Fill with actual key from Web3Forms
+                subject: `New Camera Rental Order [${bill.number}]`,
+                message: `New Order Received!\nPhone: ${phone}\nPayment Method: ${payment}\nAadhar: ${aadharFile.name}\nTotal: ₹${total}\n\nItems:\n` + cart.map(item => `- ${item.name} | From: ${item.fromDate} To: ${item.toDate} | ₹${item.total}`).join('\n')
+            };
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(emailData)
+            }).catch(e => console.error("Could not send email notification"));
+        }
+
+        loadOrder();
+    </script>
+</body>
+
+</html>

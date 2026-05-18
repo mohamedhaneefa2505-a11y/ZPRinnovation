@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ZPR INNOVATION</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            color: #ffffff;
+            background: radial-gradient(circle at top left, rgba(255, 72, 255, 0.12), transparent 20%),
+                radial-gradient(circle at bottom right, rgba(255, 160, 0, 0.14), transparent 18%),
+                #06020c;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes backgroundShift {
+
+            0%,
+            100% {
+                background: radial-gradient(circle at top left, rgba(255, 72, 255, 0.12), transparent 20%),
+                    radial-gradient(circle at bottom right, rgba(255, 160, 0, 0.14), transparent 18%),
+                    #06020c;
+            }
+
+            50% {
+                background: radial-gradient(circle at top left, rgba(255, 72, 255, 0.12), transparent 20%),
+                    radial-gradient(circle at bottom right, rgba(255, 160, 0, 0.14), transparent 18%),
+                    #06020c;
+            }
+        }
+
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(7, 4, 30, 0.95) 0%, rgba(107, 33, 168, 0.88) 50%, rgba(7, 4, 30, 0.95) 100%);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 60px;
+            z-index: 1000;
+            animation: intro 3s ease-in-out forwards;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes intro {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-10deg);
+            }
+
+            25% {
+                opacity: 0.7;
+                transform: scale(1.1) rotate(5deg);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.3) rotate(0deg);
+            }
+
+            75% {
+                opacity: 0.8;
+                transform: scale(1.1) rotate(-2deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        header {
+            background: linear-gradient(135deg, #12072d 0%, #4f2cc4 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            font-size: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            animation: headerGlow 2s ease-in-out infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(140, 90, 255, 0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes headerGlow {
+            0% {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            }
+
+            100% {
+                box-shadow: 0 4px 25px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .container {
+            padding: 20px;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .camera-columns {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .camera-column {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .camera {
+            display: flex;
+            gap: 15px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(96, 39, 163, 0.12) 100%);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            animation: slideIn 0.8s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .camera:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(112, 66, 249, 0.18) 100%);
+        }
+
+        .camera img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            /* Fallback block */
+        }
+
+        .camera img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        button {
+            background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+            transition: left 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #d8b4fe 0%, #7c3aed 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        nav {
+            background: linear-gradient(135deg, #12072d 0%, #4f2cc4 100%);
+            padding: 0;
+            margin: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            animation: navSlideDown 1s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes navSlideDown {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 0;
+        }
+
+        nav ul li {
+            margin: 0;
+            position: relative;
+        }
+
+        nav ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        nav ul li a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(124, 58, 237, 0.28) 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+
+        nav ul li a:hover::before {
+            transform: scaleX(1);
+        }
+
+        nav ul li a:hover {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
+        }
+
+        .about-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(20, 10, 50, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            animation: sectionFadeIn 2s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #7c3aed, #d8b4fe, #7c3aed, #d8b4fe);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes sectionFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .about-section h2 {
+            color: #f5f3ff;
+            margin-top: 0;
+            font-size: 2.5em;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% {
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+            }
+
+            100% {
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), 0 0 20px rgba(196, 181, 253, 0.4);
+            }
+        }
+
+        .about-section p {
+            color: rgba(242, 242, 255, 0.92);
+            line-height: 1.8;
+            font-size: 1.1em;
+            animation: textFadeIn 2.5s ease-out;
+        }
+
+        .note-section p {
+            color: #000000;
+        }
+
+        .note-section strong {
+            color: #000000;
+        }
+
+        @keyframes textFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .about-section ul {
+            animation: listSlideIn 3s ease-out;
+        }
+
+        .about-section li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            color: rgba(242, 242, 255, 0.9);
+        }
+
+        .about-section li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            color: #d8b4fe;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes listSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cart,
+        .checkout {
+            background: linear-gradient(135deg, rgba(12, 8, 32, 0.96) 0%, rgba(88, 64, 194, 0.96) 100%);
+            color: rgba(245, 245, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            margin-top: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            animation: cardSlideIn 1.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cart::before,
+        .checkout::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #7c3aed, #d8b4fe, #7c3aed, #d8b4fe);
+            background-size: 400% 400%;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        @keyframes cardSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-30px) scale(0.95);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        .checkout {
+            background: radial-gradient(circle at top left, rgba(255, 72, 255, 0.12), transparent 20%),
+                radial-gradient(circle at bottom right, rgba(255, 160, 0, 0.14), transparent 18%),
+                #06020c;
+        }
+
+        .checkout {
+            margin-bottom: 20px;
+        }
+
+        input,
+        select {
+            padding: 12px;
+            width: 100%;
+            margin: 8px 0;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(245, 245, 255, 0.95);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #000000;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+            border-radius: 10px;
+            margin-top: 15px;
+            animation: totalPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes totalPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            right: -400px;
+            /* Pull it slightly further just in case */
+            top: 0;
+            width: 320px;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(9, 5, 32, 0.98) 0%, rgba(62, 30, 123, 0.98) 100%);
+            backdrop-filter: blur(15px);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
+            transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1001;
+            padding: 25px;
+            overflow-y: auto;
+            border-left: 1px solid rgba(255, 255, 255, 0.12);
+            box-sizing: border-box;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .cart-sidebar-header h2 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .cart-sidebar-header button {
+            background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .cart-sidebar-header button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .cart-count {
+            position: fixed;
+            top: 10px;
+            right: 44px;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 1003;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            animation: bounceIn 0.5s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        #cart-btn {
+            position: fixed;
+            top: 20px;
+            right: 40px;
+            background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1002;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        #cart-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .cart-visible {
+            opacity: 1 !important;
+            pointer-events: auto;
+        }
+
+        /* Additional Animations */
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .bounce {
+            animation: bounce 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.88) 0%, rgba(37, 10, 75, 0.92) 100%);
+            backdrop-filter: blur(5px);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(19, 11, 52, 0.98) 0%, rgba(80, 52, 178, 0.98) 100%);
+            backdrop-filter: blur(20px);
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 85%;
+            max-width: 650px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            animation: modalSlideIn 0.4s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #7c3aed, #d8b4fe, #7c3aed, #d8b4fe);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes modalSlideIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            background: linear-gradient(135deg, rgba(41, 21, 98, 0.95) 0%, rgba(115, 63, 210, 0.95) 100%);
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #ffffff;
+            font-size: 1.8em;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .close-modal {
+            color: #7f8c8d;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-modal:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .spec-item {
+            margin-bottom: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .spec-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding-left: 10px;
+        }
+
+        .spec-label {
+            font-weight: bold;
+            color: rgba(242, 242, 255, 0.9);
+            display: inline-block;
+            width: 140px;
+            font-size: 1.1em;
+        }
+
+        .spec-value {
+            color: #ffffff;
+            font-size: 1.1em;
+        }
+
+        /* Image Modal Styles */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .image-modal-content {
+            position: relative;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .image-modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 2001;
+        }
+
+        .image-close:hover {
+            color: #ccc;
+        }
+
+        /* User Info Modal Styles */
+        .user-info-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .user-info-content {
+            background-color: rgba(14, 8, 42, 0.97);
+            margin: 10% auto;
+            padding: 0;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .user-info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            background: linear-gradient(135deg, #1f0f4b, #5d3bcb);
+        }
+
+        .user-info-header h2 {
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .user-info-close {
+            color: #ccc;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .user-info-close:hover {
+            color: #ffffff;
+        }
+
+        .user-info-body {
+            padding: 30px;
+            color: rgba(242, 242, 255, 0.95);
+        }
+
+        .user-info-item {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .user-info-item:last-child {
+            border-bottom: none;
+        }
+
+        .user-info-label {
+            font-weight: bold;
+            color: rgba(242, 242, 255, 0.9);
+            margin-bottom: 5px;
+            font-size: 14px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .user-info-value {
+            color: rgba(242, 242, 255, 0.95);
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="intro" class="intro-screen">
+        <h1> ZPR INNOVATION</h1>
+    </div>
+    <div id="cart-count" class="cart-count">0</div>
+    <button id="cart-btn" class="cart-hidden" onclick="openCart()">🛒</button>
+    <header style="display: none;"> ZPR INNOVATION</header>
+
+    <nav style="display: none;">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#" onclick="showUserInfo()">My Info</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="container" style="display: none;">
+
+        <h2>Available Cameras</h2>
+        <div class="camera-columns">
+            <div class="camera-column" id="camera-list-left"></div>
+            <div class="camera-column" id="camera-list-right"></div>
+        </div>
+
+        <div class="cart">
+            <h2>🛒 Your Cart</h2>
+            <div id="cart"></div>
+            <p class="total">Total: ₹<span id="total">0</span></p>
+        </div>
+
+        <div class="checkout">
+            <h2>💳 Checkout</h2>
+            <button onclick="proceedToPayment()">Proceed to Payment</button>
+        </div>
+
+        <div class="about-section note-section" style="background: #fff3cd; border: 1px solid #ffeaa7; color: #000000;">
+            <p><strong>NOTE:</strong> Advance should be paid beforehand. If any part of the camera is damaged, the
+                damaged amount will be deducted from the advanced amount.</p>
+        </div>
+
+        <div id="about" class="about-section">
+            <h2>About Us</h2>
+            <p>Welcome to ZPR INNOVATION - Your trusted partner for camera rentals! We provide high-quality,
+                professional-grade cameras for photography and videography enthusiasts.</p>
+            <p><strong>Why Choose Us?</strong></p>
+            <ul>
+                <li>Wide selection of premium cameras</li>
+                <li>Affordable rental prices</li>
+                <li>Professional editing services available</li>
+                <li>Fast and reliable service</li>
+                <li>Expert customer support</li>
+            </ul>
+        </div>
+
+        <div id="contact" class="about-section">
+            <h2>Contact Us</h2>
+            <p>For inquiries, bookings, or support, reach out to us at:</p>
+            <p>Email: <a href="mailto:zprinnovation131624@gmail.com">zprinnovation131624@gmail.com</a></p>
+            <p>Phone: +91 9150182495</p>
+            <p>Phone: +91 7358699118</p>
+            <p>Phone: +91 6382197009</p>
+        </div>
+
+    </div>
+
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-sidebar-header">
+            <h2>Your Cart</h2>
+            <button onclick="closeCart()">X</button>
+        </div>
+        <div id="sidebar-cart"></div>
+        <p class="total">Total: ₹<span id="sidebar-total">0</span></p>
+    </div>
+
+    <!-- Details Modal -->
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Camera Specifications</h2>
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+            </div>
+            <div id="modal-body" class="modal-body">
+                <!-- Specifications will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="image-modal" class="image-modal">
+        <div class="image-modal-content">
+            <span class="image-close" onclick="closeImageModal()">&times;</span>
+            <img id="modal-image" src="" alt="Camera Image">
+        </div>
+    </div>
+
+    <!-- User Info Modal -->
+    <div id="user-info-modal" class="user-info-modal">
+        <div class="user-info-content">
+            <div class="user-info-header">
+                <h2>My Information</h2>
+                <span class="user-info-close" onclick="closeUserInfo()">&times;</span>
+            </div>
+            <div id="user-info-body" class="user-info-body">
+                <!-- User information will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Enquire Modal -->
+    <div id="enquire-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Enquire About <span id="enquire-camera-name"></span></h2>
+                <span class="close-modal" onclick="closeEnquireModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="enquire-form">
+                    <!-- Replace value with your actual Web3Forms Access Key from web3forms.com -->
+                    <input type="hidden" name="access_key" value="6c87c9d8-d64c-4205-9c9b-6c07e11c36d0">
+                    <input type="hidden" name="subject" value="New Camera Inquiry from ZPR INNOVATION">
+                    <input type="hidden" name="camera_name" id="enquire-camera-input" value="">
+
+                    <label for="enquire-name">Your Name:</label>
+                    <input type="text" id="enquire-name" name="name" required
+                        style="width: 100%; padding: 12px; margin: 8px 0; border: 2px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); color: rgba(245,245,255,0.95); border-radius: 8px; box-sizing: border-box;">
+
+                    <label for="enquire-email">Email / Phone:</label>
+                    <input type="text" id="enquire-email" name="contact" required
+                        style="width: 100%; padding: 12px; margin: 8px 0; border: 2px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); color: rgba(245,245,255,0.95); border-radius: 8px; box-sizing: border-box;">
+
+                    <label for="enquire-message">Message:</label>
+                    <textarea id="enquire-message" name="message"
+                        style="width: 100%; height: 100px; padding: 12px; margin: 8px 0; border: 2px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); color: rgba(245,245,255,0.95); border-radius: 8px; box-sizing: border-box;"
+                        required></textarea>
+
+                    <button type="button" onclick="submitEnquiry()"
+                        style="margin-top: 15px; background: linear-gradient(135deg, #FF6B35 0%, #e74c3c 100%); box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4); width: 100%;">Send
+                        Enquiry</button>
+                    <p id="enquire-status" style="display:none; text-align: center; margin-top: 10px;"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Date Selection Modal -->
+    <div id="date-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Select Rental Dates</h2>
+                <span class="close-modal" onclick="closeDateModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <label for="from-date">From Date:</label>
+                <input type="date" id="from-date" min="" onchange="updateToDateMin()" required>
+                <br><br>
+                <label for="to-date">To Date:</label>
+                <input type="date" id="to-date" min="" required>
+                <br><br>
+                <button onclick="confirmRent()">Confirm Rent</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const cameras = [
+            {
+                id: 1,
+                name: "Canon EOS R5",
+                price: 1500,
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Canon_EOS_R5_%28cropped%29.jpg/960px-Canon_EOS_R5_%28cropped%29.jpg",
+                specs: {
+                    sensor: "45MP Full-Frame CMOS",
+                    resolution: "8192 x 5464",
+                    iso: "100-51200 (expandable to 102400)",
+                    autofocus: "5940-point Dual Pixel CMOS AF II",
+                    video: "8K RAW, 4K 120p",
+                    weight: "738g"
+                }
+            },
+            {
+                id: 2,
+                name: "Sony A7 IV",
+                price: 1200,
+                image: "https://upload.wikimedia.org/wikipedia/commons/8/8b/Sony_A7_IV_%28ILCE-7M4%29_-_by_Henry_S%C3%B6derlund_%2851739988735%29.jpg",
+                specs: {
+                    sensor: "33MP Full-Frame CMOS",
+                    resolution: "7008 x 4672",
+                    iso: "100-51200 (expandable to 204800)",
+                    autofocus: "759-point Fast Hybrid AF",
+                    video: "4K 60p, Full HD 120p",
+                    weight: "659g"
+                }
+            },
+            {
+                id: 3,
+                name: "Nikon Z6 II",
+                price: 1000,
+                image: "https://upload.wikimedia.org/wikipedia/commons/2/26/Nikon_Z_6II_2.jpg",
+                specs: {
+                    sensor: "24.5MP Full-Frame CMOS",
+                    resolution: "6048 x 4024",
+                    iso: "100-51200 (expandable to 204800)",
+                    autofocus: "273-point Hybrid AF",
+                    video: "4K 60p, Full HD 120p",
+                    weight: "705g"
+                }
+            },
+            {
+                id: 4,
+                name: "Fujifilm X-T5",
+                price: 950,
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Fujifilm_X-T5_4_nov_2022a.jpg/960px-Fujifilm_X-T5_4_nov_2022a.jpg",
+                specs: {
+                    sensor: "40.2MP APS-C X-Trans CMOS 5 HR",
+                    resolution: "7728 x 5152",
+                    iso: "125-12800 (expandable to 51200)",
+                    autofocus: "425-point Hybrid AF",
+                    video: "6.2K 30p, 4K 60p",
+                    weight: "557g"
+                }
+            },
+            {
+                id: 5,
+                name: "Panasonic Lumix GH6",
+                price: 1100,
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Panasonic_Lumix_DC-GH6.jpg/960px-Panasonic_Lumix_DC-GH6.jpg",
+                specs: {
+                    sensor: "25.2MP Micro Four Thirds CMOS",
+                    resolution: "5776 x 4336",
+                    iso: "100-25600 (expandable to 25600)",
+                    autofocus: "315-point DFD AF",
+                    video: "5.7K 60p, 4K 120p",
+                    weight: "823g"
+                }
+            },
+            {
+                id: 6,
+                name: "Canon EOS 5D Mark IV",
+                price: 1300,
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Canon_EOS_5D_Mark_IV_and_EF_11-24mm_F4L_USM.jpg/960px-Canon_EOS_5D_Mark_IV_and_EF_11-24mm_F4L_USM.jpg",
+                specs: {
+                    sensor: "30.4MP Full-Frame CMOS",
+                    resolution: "6720 x 4480",
+                    iso: "100-32000 (expandable to 102400)",
+                    autofocus: "61-point AF",
+                    video: "4K 30p, Full HD 60p",
+                    weight: "890g"
+                }
+            },
+            {
+                id: 7,
+                name: "Sony A7R V",
+                price: 1600,
+                image: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Sony_a7R_V_20230616_162637.jpg",
+                specs: {
+                    sensor: "61MP Full-Frame CMOS",
+                    resolution: "9504 x 6336",
+                    iso: "100-32000 (expandable to 102400)",
+                    autofocus: "693-point Fast Hybrid AF",
+                    video: "8K 24p, 4K 60p",
+                    weight: "723g"
+                }
+            },
+            {
+                id: 8,
+                name: "Nikon D850",
+                price: 1150,
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/20171009_D850_front.jpg/960px-20171009_D850_front.jpg",
+                specs: {
+                    sensor: "45.7MP Full-Frame CMOS",
+                    resolution: "8256 x 5504",
+                    iso: "64-25600 (expandable to 102400)",
+                    autofocus: "153-point AF",
+                    video: "4K 30p, Full HD 120p",
+                    weight: "1005g"
+                }
+            },
+            {
+                id: 9,
+                name: "Canon EOS R6",
+                price: 1400,
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Canon_R6_und_RF_85_2%2C0-8065.jpg/960px-Canon_R6_und_RF_85_2%2C0-8065.jpg",
+                specs: {
+                    sensor: "20.1MP Full-Frame CMOS",
+                    resolution: "5472 x 3648",
+                    iso: "100-102400 (expandable to 204800)",
+                    autofocus: "6072-point Dual Pixel CMOS AF II",
+                    video: "4K 60p, Full HD 120p",
+                    weight: "680g"
+                }
+            },
+            {
+                id: 10,
+                name: "Sony FX3",
+                price: 1700,
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Sony_FX3_with_Sony_FE_24mm_F1.4_GM_-_by_Henry_S%C3%B6derlund_%2851061907312%2C_cropped%29.jpg/960px-Sony_FX3_with_Sony_FE_24mm_F1.4_GM_-_by_Henry_S%C3%B6derlund_%2851061907312%2C_cropped%29.jpg",
+                specs: {
+                    sensor: "12.1MP Full-Frame CMOS",
+                    resolution: "4240 x 2832",
+                    iso: "80-102400 (expandable to 409600)",
+                    autofocus: "627-point Fast Hybrid AF",
+                    video: "4K 120p, Full HD 240p",
+                    weight: "715g"
+                }
+            },
+            {
+                id: 11,
+                name: "Panasonic S5 II",
+                price: 1050,
+                image: "https://upload.wikimedia.org/wikipedia/commons/0/07/Panasonic_Lumix_DC-S5II_with_Lumix_S_50mm_1.8_2023-02-06.jpg",
+                specs: {
+                    sensor: "24.2MP Full-Frame CMOS",
+                    resolution: "6000 x 4000",
+                    iso: "100-51200 (expandable to 204800)",
+                    autofocus: "779-point PDAF",
+                    video: "6K 30p, 4K 60p",
+                    weight: "740g"
+                }
+            },
+            {
+                id: 12,
+                name: "Nikon Z9",
+                price: 1900,
+                image: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Nikon_Z9.jpg",
+                specs: {
+                    sensor: "45.7MP Stacked CMOS",
+                    resolution: "8256 x 5504",
+                    iso: "64-25600 (expandable to 102400)",
+                    autofocus: "493-point Hybrid AF",
+                    video: "8K 60p, 4K 120p",
+                    weight: "1340g"
+                }
+            }
+        ];
+
+        let cart = [];
+        let currentRentId = null;
+
+        function displayCameras() {
+            const leftList = document.getElementById("camera-list-left");
+            const rightList = document.getElementById("camera-list-right");
+            leftList.innerHTML = "";
+            rightList.innerHTML = "";
+
+            cameras.forEach((cam, index) => {
+                const div = document.createElement("div");
+                div.className = "camera";
+
+                div.innerHTML = `
+            <img src="${cam.image}" onclick="openImageModal('${cam.image}')" style="cursor: pointer;">
+            <div>
+                <h3>${cam.name}</h3>
+                <p>₹${cam.price}/day</p>
+                Add Editing (+₹500 minimum)
+                <input type="checkbox" id="edit-${cam.id}">
+                <br><br>
+                <button onclick="showDetails(${cam.id})">Details</button>
+                <button onclick="rent(${cam.id})">Rent</button>
+                <br><br>
+                <button onclick="openEnquireModal('${cam.name}')" style="background: linear-gradient(135deg, #FF6B35 0%, #e74c3c 100%); box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);">Enquire</button>
+            </div>
+        `;
+
+                if (index < 6) {
+                    rightList.appendChild(div);
+                } else {
+                    leftList.appendChild(div);
+                }
+            });
+        }
+
+        function rent(id) {
+            currentRentId = id;
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('from-date').min = today;
+            document.getElementById('to-date').min = today;
+            document.getElementById('date-modal').style.display = 'block';
+        }
+
+        function confirmRent() {
+            const fromDate = document.getElementById('from-date').value;
+            const toDate = document.getElementById('to-date').value;
+
+            if (!fromDate || !toDate) {
+                alert('Please select both from and to dates.');
+                return;
+            }
+
+            const from = new Date(fromDate);
+            const to = new Date(toDate);
+
+            if (from >= to) {
+                alert('To date must be after from date.');
+                return;
+            }
+
+            const cam = cameras.find(c => c.id === currentRentId);
+            const edit = document.getElementById(`edit-${currentRentId}`).checked;
+
+            let total = cam.price;
+            if (edit) total += 500;
+
+            // Calculate number of days
+            const timeDiff = to.getTime() - from.getTime();
+            const days = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1; // +1 to include both start and end date
+            total *= days;
+
+            cart.push({
+                name: cam.name,
+                total: total,
+                editing: edit,
+                fromDate: fromDate,
+                toDate: toDate,
+                days: days
+            });
+
+            updateCart();
+            closeDateModal();
+        }
+
+        function closeDateModal() {
+            document.getElementById('date-modal').style.display = 'none';
+            document.getElementById('from-date').value = '';
+            document.getElementById('to-date').value = '';
+            currentRentId = null;
+        }
+
+        function openEnquireModal(cameraName) {
+            document.getElementById('enquire-camera-name').innerText = cameraName;
+            document.getElementById('enquire-camera-input').value = cameraName;
+            document.getElementById('enquire-modal').style.display = 'block';
+            document.getElementById('enquire-status').style.display = 'none';
+        }
+
+        function closeEnquireModal() {
+            document.getElementById('enquire-modal').style.display = 'none';
+            document.getElementById('enquire-form').reset();
+        }
+
+        async function submitEnquiry() {
+            const form = document.getElementById('enquire-form');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const statusEl = document.getElementById('enquire-status');
+            statusEl.style.display = 'block';
+            statusEl.style.color = '#fff';
+            statusEl.innerText = 'Sending...';
+
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
+
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: json
+                });
+                const result = await response.json();
+                if (response.status === 200) {
+                    statusEl.style.color = '#27ae60';
+                    statusEl.innerText = 'Enquiry sent successfully!';
+                    setTimeout(closeEnquireModal, 2000);
+                } else {
+                    console.log(response);
+                    statusEl.style.color = '#e74c3c';
+                    statusEl.innerText = result.message || 'Error sending. Check Access Key.';
+                }
+            } catch (error) {
+                console.log(error);
+                statusEl.style.color = '#e74c3c';
+                statusEl.innerText = 'Something went wrong!';
+            }
+        }
+
+        function updateToDateMin() {
+            const fromDate = document.getElementById('from-date').value;
+            document.getElementById('to-date').min = fromDate;
+        }
+
+        function updateCart() {
+            const cartDiv = document.getElementById("cart");
+            const totalDiv = document.getElementById("total");
+
+            cartDiv.innerHTML = "";
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.total;
+
+                const div = document.createElement("div");
+                div.innerHTML = `
+            ${item.name} - ₹${item.total} (${item.days} days)
+            ${item.editing ? "(Editing)" : ""}
+            <br>From: ${item.fromDate} To: ${item.toDate}
+            <button onclick="removeItem(${index})">X</button>
+        `;
+
+                cartDiv.appendChild(div);
+            });
+
+            // Add advance line
+            const advanceDiv = document.createElement("div");
+            advanceDiv.innerHTML = `Advance Payment - ₹10000`;
+            cartDiv.appendChild(advanceDiv);
+
+            // Add advance of 10000
+            total += 10000;
+
+            totalDiv.innerText = total;
+
+            const countEl = document.getElementById('cart-count');
+            const cartCount = cart.length;
+            countEl.innerText = cartCount;
+            if (cartCount > 0) {
+                countEl.classList.add('cart-visible');
+            } else {
+                countEl.classList.remove('cart-visible');
+            }
+
+            const sidebarCart = document.getElementById('sidebar-cart');
+            const sidebarTotal = document.getElementById('sidebar-total');
+            sidebarCart.innerHTML = '';
+            cart.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.innerHTML = `
+            ${item.name} - ₹${item.total} (${item.days} days)
+            ${item.editing ? "(Editing)" : ""}
+            <br>From: ${item.fromDate} To: ${item.toDate}
+            <button onclick="removeItem(${index})">X</button>
+        `;
+                sidebarCart.appendChild(div);
+            });
+            // Add advance line to sidebar
+            const sidebarAdvanceDiv = document.createElement('div');
+            sidebarAdvanceDiv.innerHTML = `Advance Payment - ₹10000`;
+            sidebarCart.appendChild(sidebarAdvanceDiv);
+            sidebarTotal.innerText = total;
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function openCart() {
+            const btn = document.getElementById('cart-btn');
+            const countEl = document.getElementById('cart-count');
+            btn.classList.remove('cart-visible');
+            countEl.classList.remove('cart-visible');
+            setTimeout(() => {
+                document.getElementById('cart-sidebar').classList.add('open');
+            }, 300);
+        }
+
+        function closeCart() {
+            document.getElementById('cart-sidebar').classList.remove('open');
+            setTimeout(() => {
+                const btn = document.getElementById('cart-btn');
+                const countEl = document.getElementById('cart-count');
+                btn.classList.add('cart-visible');
+                if (cart.length > 0) countEl.classList.add('cart-visible');
+            }, 300);
+        }
+
+        function proceedToPayment() {
+            const total = parseInt(document.getElementById("total").innerText, 10);
+
+            if (cart.length === 0) {
+                alert("Please add items to the cart before proceeding to payment.");
+                return;
+            }
+
+            localStorage.setItem('rentalCart', JSON.stringify(cart));
+            localStorage.setItem('rentalTotal', total.toString());
+            window.location.href = 'payment.html';
+        }
+
+        function showDetails(id) {
+            const cam = cameras.find(c => c.id === id);
+            if (!cam) return;
+
+            const modal = document.getElementById('details-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+
+            modalTitle.textContent = `${cam.name} Specifications`;
+
+            modalBody.innerHTML = `
+        <div class="spec-item">
+            <span class="spec-label">Sensor:</span>
+            <span class="spec-value">${cam.specs.sensor}</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Resolution:</span>
+            <span class="spec-value">${cam.specs.resolution}</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">ISO Range:</span>
+            <span class="spec-value">${cam.specs.iso}</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Autofocus:</span>
+            <span class="spec-value">${cam.specs.autofocus}</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Video:</span>
+            <span class="spec-value">${cam.specs.video}</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Weight:</span>
+            <span class="spec-value">${cam.specs.weight}</span>
+        </div>
+    `;
+
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('details-modal');
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function (event) {
+            const modal = document.getElementById('details-modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+            const imageModal = document.getElementById('image-modal');
+            if (event.target === imageModal) {
+                imageModal.style.display = 'none';
+            }
+            const userInfoModal = document.getElementById('user-info-modal');
+            if (event.target === userInfoModal) {
+                userInfoModal.style.display = 'none';
+            }
+            const dateModal = document.getElementById('date-modal');
+            if (event.target === dateModal) {
+                closeDateModal();
+            }
+            const enquireModal = document.getElementById('enquire-modal');
+            if (event.target === enquireModal) {
+                closeEnquireModal();
+            }
+        }
+
+        function openImageModal(imageSrc) {
+            const modal = document.getElementById('image-modal');
+            const img = document.getElementById('modal-image');
+            img.src = imageSrc;
+            modal.style.display = 'block';
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('image-modal');
+            modal.style.display = 'none';
+        }
+
+        function showUserInfo() {
+            const username = localStorage.getItem('username') || 'User';
+            const email = localStorage.getItem('email') || 'Not provided';
+            const modal = document.getElementById('user-info-modal');
+            const userInfoBody = document.getElementById('user-info-body');
+
+            userInfoBody.innerHTML = `
+        <div class="user-info-item">
+            <div class="user-info-label">Username</div>
+            <div class="user-info-value">${username}</div>
+        </div>
+        <div class="user-info-item">
+            <div class="user-info-label">Email</div>
+            <div class="user-info-value">${email}</div>
+        </div>
+        <div class="user-info-item">
+            <div class="user-info-label">Account Status</div>
+            <div class="user-info-value">Active ✓</div>
+        </div>
+    `;
+
+            modal.style.display = 'block';
+        }
+
+        function closeUserInfo() {
+            const modal = document.getElementById('user-info-modal');
+            modal.style.display = 'none';
+        }
+
+        displayCameras();
+
+        function logout() {
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('username');
+            localStorage.removeItem('email');
+            window.location.href = 'login.html';
+        }
+
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('loggedIn') !== 'true') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            setTimeout(() => {
+                document.getElementById('intro').style.display = 'none';
+                document.querySelector('header').style.display = 'block';
+                document.querySelector('nav').style.display = 'block';
+                document.querySelector('.container').style.display = 'block';
+                const cartBtn = document.getElementById('cart-btn');
+                cartBtn.classList.add('cart-visible');
+                if (cart.length > 0) {
+                    document.getElementById('cart-count').classList.add('cart-visible');
+                }
+            }, 2000);
+        });
+    </script>
+
+</body>
+
+</html>
